@@ -1,0 +1,1344 @@
+warning: variants `Id`, `Email`, and `Password` are never constructed
+  --> migration/src/m20251023_061052_add_user_fields.rs:72:5
+   |
+70 | enum User {
+   |      ---- variants in this enum
+71 |     Table,
+72 |     Id,
+   |     ^^
+73 |     Email,
+   |     ^^^^^
+74 |     Password,
+   |     ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `migration` (lib) generated 1 warning
+   Compiling blogapp05 v0.1.0 (/home/hiroppy123/blogapp05)
+error: positional arguments cannot follow named arguments
+   --> src/models/user.rs:144:21
+    |
+143 |                     token_expiration = expired_at.to_string(),
+    |                     ----------------------------------------- named argument
+144 |                     "magic token expired for the user."
+    |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ positional arguments must be before named arguments
+
+error[E0433]: failed to resolve: could not find `users` in `_entities`
+  --> src/models/user.rs:47:48
+   |
+47 | impl ActiveModelBehavior for super::_entities::users::ActiveModel {
+   |                                                ^^^^^ could not find `users` in `_entities`
+
+error[E0433]: failed to resolve: use of undeclared type `Utc`
+  --> src/models/_entities/user.rs:93:19
+   |
+93 | ...   exp: (Utc::now() + Duration::seconds(expiration)).timestamp() as u...
+   |             ^^^ use of undeclared type `Utc`
+   |
+help: consider importing this struct
+   |
+ 1 + use chrono::Utc;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `Duration`
+  --> src/models/_entities/user.rs:93:32
+   |
+93 | ...   exp: (Utc::now() + Duration::seconds(expiration)).timestamp() as u...
+   |                          ^^^^^^^^ use of undeclared type `Duration`
+   |
+help: consider importing one of these items
+   |
+ 1 + use std::time::Duration;
+   |
+ 1 + use chrono::Duration;
+   |
+ 1 + use tokio::time::Duration;
+   |
+
+error[E0425]: cannot find function `encode` in this scope
+  --> src/models/_entities/user.rs:95:9
+   |
+95 | ...   encode(&Header::default(), &claims, &EncodingKey::from_secret(secr...
+   |       ^^^^^^ not found in this scope
+   |
+help: consider importing this function
+   |
+ 1 + use jsonwebtoken::encode;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `Header`
+  --> src/models/_entities/user.rs:95:17
+   |
+95 | ...   encode(&Header::default(), &claims, &EncodingKey::from_secret(secr...
+   |               ^^^^^^ use of undeclared type `Header`
+   |
+help: consider importing this struct
+   |
+ 1 + use jsonwebtoken::Header;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `EncodingKey`
+  --> src/models/_entities/user.rs:95:46
+   |
+95 | ...&claims, &EncodingKey::from_secret(secret.as_ref()))
+   |              ^^^^^^^^^^^ use of undeclared type `EncodingKey`
+   |
+help: consider importing this struct
+   |
+ 1 + use jsonwebtoken::EncodingKey;
+   |
+
+error[E0425]: cannot find function `hash` in this scope
+   --> src/models/_entities/user.rs:109:31
+    |
+109 | ...   let hashed_password = hash(password, DEFAULT_COST).map_err(|_| Db...
+    |                             ^^^^ not found in this scope
+    |
+help: consider importing one of these functions
+    |
+  1 + use std::ptr::hash;
+    |
+  1 + use bcrypt::hash;
+    |
+
+error[E0425]: cannot find value `DEFAULT_COST` in this scope
+   --> src/models/_entities/user.rs:109:46
+    |
+109 | ... hash(password, DEFAULT_COST).map_err(|_| DbErr::Custom("Password ha...
+    |                    ^^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing this constant
+    |
+  1 + use bcrypt::DEFAULT_COST;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `Utc`
+   --> src/models/_entities/user.rs:122:43
+    |
+122 |         self.email_verified_at = Set(Some(Utc::now().fixed_offset()));
+    |                                           ^^^ use of undeclared type `Utc`
+    |
+help: consider importing this struct
+    |
+  1 + use chrono::Utc;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `Utc`
+   --> src/models/_entities/user.rs:127:43
+    |
+127 |         self.email_verified_at = Set(Some(Utc::now().fixed_offset()));
+    |                                           ^^^ use of undeclared type `Utc`
+    |
+help: consider importing this struct
+    |
+  1 + use chrono::Utc;
+    |
+
+error[E0412]: cannot find type `ActiveModel` in this scope
+  --> src/models/user.rs:37:22
+   |
+37 | impl Validatable for ActiveModel {
+   |                      ^^^^^^^^^^^ not found in this scope
+   |
+help: consider importing one of these structs
+   |
+ 1 + use crate::models::_entities::post::ActiveModel;
+   |
+ 1 + use crate::models::_entities::user::ActiveModel;
+   |
+ 1 + use crate::models::post::ActiveModel;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::ActiveModel;
+   |
+
+error[E0412]: cannot find type `Model` in this scope
+  --> src/models/user.rs:65:24
+   |
+65 | impl Authenticable for Model {
+   |                        ^^^^^ not found in this scope
+   |
+help: consider importing one of these structs
+   |
+ 1 + use crate::models::_entities::post::Model;
+   |
+ 1 + use crate::models::_entities::user::Model;
+   |
+ 1 + use crate::models::post::Model;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Model;
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+  --> src/models/user.rs:67:20
+   |
+67 |         let user = user::Entity::find()
+   |                    ^^^^ use of unresolved module or unlinked crate `user`
+   |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+  --> src/lib.rs:1:1
+   |
+ 1 + mod user;
+   |
+help: consider importing one of these structs
+   |
+ 1 + use crate::models::_entities::post::Entity;
+   |
+ 1 + use crate::models::_entities::user::Entity;
+   |
+ 1 + use crate::models::post::Entity;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Entity;
+   |
+help: if you import `Entity`, refer to it directly
+   |
+67 -         let user = user::Entity::find()
+67 +         let user = Entity::find()
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+  --> src/models/user.rs:70:25
+   |
+70 |                     .eq(user::Column::ApiKey, api_key)
+   |                         ^^^^ use of unresolved module or unlinked crate `user`
+   |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+  --> src/lib.rs:1:1
+   |
+ 1 + mod user;
+   |
+help: consider importing one of these enums
+   |
+ 1 + use crate::models::_entities::post::Column;
+   |
+ 1 + use crate::models::_entities::user::Column;
+   |
+ 1 + use crate::models::post::Column;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Column;
+   |
+help: if you import `Column`, refer to it directly
+   |
+70 -                     .eq(user::Column::ApiKey, api_key)
+70 +                     .eq(Column::ApiKey, api_key)
+   |
+
+error[E0412]: cannot find type `Model` in this scope
+  --> src/models/user.rs:83:6
+   |
+83 | impl Model {
+   |      ^^^^^ not found in this scope
+   |
+help: consider importing one of these structs
+   |
+ 1 + use crate::models::_entities::post::Model;
+   |
+ 1 + use crate::models::_entities::user::Model;
+   |
+ 1 + use crate::models::post::Model;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Model;
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+  --> src/models/user.rs:90:20
+   |
+90 |         let user = user::Entity::find()
+   |                    ^^^^ use of unresolved module or unlinked crate `user`
+   |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+  --> src/lib.rs:1:1
+   |
+ 1 + mod user;
+   |
+help: consider importing one of these structs
+   |
+ 1 + use crate::models::_entities::post::Entity;
+   |
+ 1 + use crate::models::_entities::user::Entity;
+   |
+ 1 + use crate::models::post::Entity;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Entity;
+   |
+help: if you import `Entity`, refer to it directly
+   |
+90 -         let user = user::Entity::find()
+90 +         let user = Entity::find()
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+  --> src/models/user.rs:93:25
+   |
+93 |                     .eq(user::Column::Email, email)
+   |                         ^^^^ use of unresolved module or unlinked crate `user`
+   |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+  --> src/lib.rs:1:1
+   |
+ 1 + mod user;
+   |
+help: consider importing one of these enums
+   |
+ 1 + use crate::models::_entities::post::Column;
+   |
+ 1 + use crate::models::_entities::user::Column;
+   |
+ 1 + use crate::models::post::Column;
+   |
+ 1 + use sea_orm_migration::seaql_migrations::Column;
+   |
+help: if you import `Column`, refer to it directly
+   |
+93 -                     .eq(user::Column::Email, email)
+93 +                     .eq(Column::Email, email)
+   |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:110:20
+    |
+110 |         let user = user::Entity::find()
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+110 -         let user = user::Entity::find()
+110 +         let user = Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:113:25
+    |
+113 |                     .eq(user::Column::EmailVerificationToken, token)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+113 -                     .eq(user::Column::EmailVerificationToken, token)
+113 +                     .eq(Column::EmailVerificationToken, token)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:127:20
+    |
+127 |         let user = user::Entity::find()
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+127 -         let user = user::Entity::find()
+127 +         let user = Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:130:25
+    |
+130 |                     .eq(user::Column::MagicLinkToken, token)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+130 -                     .eq(user::Column::MagicLinkToken, token)
+130 +                     .eq(Column::MagicLinkToken, token)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:163:20
+    |
+163 |         let user = user::Entity::find()
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+163 -         let user = user::Entity::find()
+163 +         let user = Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:166:25
+    |
+166 |                     .eq(user::Column::ResetToken, token)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+166 -                     .eq(user::Column::ResetToken, token)
+166 +                     .eq(Column::ResetToken, token)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:181:20
+    |
+181 |         let user = user::Entity::find()
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+181 -         let user = user::Entity::find()
+181 +         let user = Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:184:25
+    |
+184 |                     .eq(user::Column::Pid, parse_uuid)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+184 -                     .eq(user::Column::Pid, parse_uuid)
+184 +                     .eq(Column::Pid, parse_uuid)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:198:20
+    |
+198 |         let user = user::Entity::find()
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+198 -         let user = user::Entity::find()
+198 +         let user = Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:201:25
+    |
+201 |                     .eq(user::Column::ApiKey, api_key)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+201 -                     .eq(user::Column::ApiKey, api_key)
+201 +                     .eq(Column::ApiKey, api_key)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:231:12
+    |
+231 |         if user::Entity::find()
+    |            ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Entity;
+    |
+  1 + use crate::models::_entities::user::Entity;
+    |
+  1 + use crate::models::post::Entity;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Entity;
+    |
+help: if you import `Entity`, refer to it directly
+    |
+231 -         if user::Entity::find()
+231 +         if Entity::find()
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:234:25
+    |
+234 |                     .eq(user::Column::Email, &params.email)
+    |                         ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing one of these enums
+    |
+  1 + use crate::models::_entities::post::Column;
+    |
+  1 + use crate::models::_entities::user::Column;
+    |
+  1 + use crate::models::post::Column;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Column;
+    |
+help: if you import `Column`, refer to it directly
+    |
+234 -                     .eq(user::Column::Email, &params.email)
+234 +                     .eq(Column::Email, &params.email)
+    |
+
+error[E0433]: failed to resolve: use of unresolved module or unlinked crate `user`
+   --> src/models/user.rs:246:20
+    |
+246 |         let user = user::ActiveModel {
+    |                    ^^^^ use of unresolved module or unlinked crate `user`
+    |
+help: to make use of source file src/models/user.rs, use `mod user` in this file to declare the module
+   --> src/lib.rs:1:1
+    |
+  1 + mod user;
+    |
+help: consider importing this module
+    |
+  1 + use crate::models::_entities::user;
+    |
+
+error[E0412]: cannot find type `ActiveModel` in this scope
+   --> src/models/user.rs:272:6
+    |
+272 | impl ActiveModel {
+    |      ^^^^^^^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::ActiveModel;
+    |
+  1 + use crate::models::_entities::user::ActiveModel;
+    |
+  1 + use crate::models::post::ActiveModel;
+    |
+  1 + use sea_orm_migration::seaql_migrations::ActiveModel;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:285:22
+    |
+285 |     ) -> ModelResult<Model> {
+    |                      ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:303:93
+    |
+303 | ...on) -> ModelResult<Model> {
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:318:77
+    |
+318 | ...on) -> ModelResult<Model> {
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:336:22
+    |
+336 |     ) -> ModelResult<Model> {
+    |                      ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:351:86
+    |
+351 | ...on) -> ModelResult<Model> {
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+error[E0412]: cannot find type `Model` in this scope
+   --> src/models/user.rs:367:85
+    |
+367 | ...on) -> ModelResult<Model> {
+    |                       ^^^^^ not found in this scope
+    |
+help: consider importing one of these structs
+    |
+  1 + use crate::models::_entities::post::Model;
+    |
+  1 + use crate::models::_entities::user::Model;
+    |
+  1 + use crate::models::post::Model;
+    |
+  1 + use sea_orm_migration::seaql_migrations::Model;
+    |
+
+warning: unused imports: `Column`, `Entity`, and `Model`
+ --> src/controllers/auth.rs:4:33
+  |
+4 |         _entities::user::{self, Column, Entity, Model},
+  |                                 ^^^^^^  ^^^^^^  ^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused imports: `Deserialize` and `Serialize`
+ --> src/models/_entities/post.rs:3:13
+  |
+3 | use serde::{Deserialize, Serialize};
+  |             ^^^^^^^^^^^  ^^^^^^^^^
+
+warning: unused imports: `DEFAULT_COST` and `hash`
+ --> src/models/user.rs:2:14
+  |
+2 | use bcrypt::{hash, DEFAULT_COST};
+  |              ^^^^  ^^^^^^^^^^^^
+
+warning: unused imports: `ActiveModel as UserActiveModel`, `Entity as UserEntity`, and `Model as UserModel`
+ --> src/models/user.rs:9:38
+  |
+9 | ...::{Entity as UserEntity, Model as UserModel, ActiveModel as UserActiveModel};
+  |       ^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `crate::models::_entities::post::Model as PostModel`
+  --> src/models/user.rs:11:5
+   |
+11 | use crate::models::_entities::post::Model as PostModel;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+error[E0277]: the trait bound `ActiveModel: ActiveModelBehavior` is not satisfied
+  --> src/models/_entities/user.rs:5:35
+   |
+ 5 | ...g, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+   |                  ^^^^^^^^^^^^^^^^^ unsatisfied trait bound
+   |
+   = help: the trait `sea_orm::ActiveModelBehavior` is not implemented for `_entities::user::ActiveModel`
+   = help: the following other types implement trait `sea_orm::ActiveModelBehavior`:
+             _entities::post::ActiveModel
+             models::post::ActiveModel
+             sea_orm_migration::seaql_migrations::ActiveModel
+note: required by a bound in `sea_orm::EntityTrait::ActiveModel`
+  --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:62:23
+   |
+62 |     type ActiveModel: ActiveModelBehavior<Entity = Self>;
+   |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `EntityTrait::ActiveModel`
+   = note: the full name for the type has been written to '/home/hiroppy123/blogapp05/target/debug/deps/blogapp05-cb275cdbe675504c.long-type-17812125867663067397.txt'
+   = note: consider using `--verbose` to print the full type name to the console
+   = note: this error originates in the derive macro `sea_orm::prelude::DeriveEntity` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0308]: mismatched types
+  --> src/controllers/auth.rs:50:58
+   |
+50 |     let res = user::Model::create_with_password(&ctx.db, &params).await?;
+   |               ---------------------------------          ^^^^^^^ expected `RegisterParams`, found `&RegisterParams`
+   |               |
+   |               arguments to this function are incorrect
+   |
+note: associated function defined here
+  --> src/models/_entities/user.rs:43:18
+   |
+43 |     pub async fn create_with_password(
+   |                  ^^^^^^^^^^^^^^^^^^^^
+44 |         db: &DbConn, 
+45 |         params: crate::models::user::RegisterParams
+   |         -------------------------------------------
+help: consider removing the borrow
+   |
+50 -     let res = user::Model::create_with_password(&ctx.db, &params).await?;
+50 +     let res = user::Model::create_with_password(&ctx.db, params).await?;
+   |
+
+error[E0277]: the `?` operator can only be applied to values that implement `Try`
+  --> src/controllers/auth.rs:52:16
+   |
+52 |     let user = res?;
+   |                ^^^^ the `?` operator cannot be applied to type `_entities::user::Model`
+   |
+   = help: the trait `Try` is not implemented for `_entities::user::Model`
+
+error[E0599]: no function or associated item named `find_by_email` found for struct `_entities::user::Model` in the current scope
+  --> src/controllers/auth.rs:54:29
+   |
+54 |     let user = user::Model::find_by_email(&ctx.db, &params.email).await?;
+   |                             ^^^^^^^^^^^^^ function or associated item not found in `_entities::user::Model`
+   |
+  ::: src/models/_entities/user.rs:7:1
+   |
+ 7 | pub struct Model {
+   | ---------------- function or associated item `find_by_email` not found for this struct
+   |
+help: there is an associated function `find_by_pid` with a similar name
+   |
+54 -     let user = user::Model::find_by_email(&ctx.db, &params.email).await?;
+54 +     let user = user::Model::find_by_pid(&ctx.db, &params.email).await?;
+   |
+
+error[E0308]: mismatched types
+  --> src/controllers/auth.rs:57:9
+   |
+56 |     let user = match res {
+   |                      --- this expression has type `_entities::user::Model`
+57 |         Ok(user) => user,
+   |         ^^^^^^^^ expected `Model`, found `Result<_, _>`
+   |
+   = note: expected struct `_entities::user::Model`
+                found enum `std::result::Result<_, _>`
+
+error[E0308]: mismatched types
+  --> src/controllers/auth.rs:58:9
+   |
+56 |     let user = match res {
+   |                      --- this expression has type `_entities::user::Model`
+57 |         Ok(user) => user,
+58 |         Err(err) => {
+   |         ^^^^^^^^ expected `Model`, found `Result<_, _>`
+   |
+   = note: expected struct `_entities::user::Model`
+                found enum `std::result::Result<_, _>`
+
+error[E0599]: no method named `verified` found for struct `_entities::user::ActiveModel` in the current scope
+  --> src/controllers/auth.rs:95:33
+   |
+95 |         let user = active_model.verified(&ctx.db).await?;
+   |                                 ^^^^^^^^ method not found in `_entities::user::ActiveModel`
+   |
+  ::: src/models/_entities/user.rs:5:35
+   |
+ 5 | ...Eq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+   |        ----------------- method `verified` not found for this struct
+
+error[E0599]: no function or associated item named `find_by_email` found for struct `_entities::user::Model` in the current scope
+   --> src/controllers/auth.rs:111:33
+    |
+111 | ...user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+    |                         ^^^^^^^^^^^^^ function or associated item not found in `_entities::user::Model`
+    |
+   ::: src/models/_entities/user.rs:7:1
+    |
+  7 | pub struct Model {
+    | ---------------- function or associated item `find_by_email` not found for this struct
+    |
+help: there is an associated function `find_by_pid` with a similar name
+    |
+111 -     let Ok(user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+111 +     let Ok(user) = user::Model::find_by_pid(&ctx.db, &params.email).await else {
+    |
+
+error[E0599]: the method `into_active_model` exists for enum `std::option::Option<_entities::user::Model>`, but its trait bounds were not satisfied
+   --> src/controllers/auth.rs:137:10
+    |
+137 |     user.into_active_model()
+    |          ^^^^^^^^^^^^^^^^^ method cannot be called on `std::option::Option<_entities::user::Model>` due to unsatisfied trait bounds
+    |
+    = note: the following trait bounds were not satisfied:
+            `std::option::Option<_entities::user::Model>: sea_orm::ActiveModelTrait`
+            which is required by `std::option::Option<_entities::user::Model>: sea_orm::IntoActiveModel<std::option::Option<_entities::user::Model>>`
+            `&std::option::Option<_entities::user::Model>: sea_orm::ActiveModelTrait`
+            which is required by `&std::option::Option<_entities::user::Model>: sea_orm::IntoActiveModel<&std::option::Option<_entities::user::Model>>`
+            `&mut std::option::Option<_entities::user::Model>: sea_orm::ActiveModelTrait`
+            which is required by `&mut std::option::Option<_entities::user::Model>: sea_orm::IntoActiveModel<&mut std::option::Option<_entities::user::Model>>`
+note: the method `into_active_model` exists on the type `_entities::user::Model`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/active_model.rs:649:5
+    |
+649 |     fn into_active_model(self) -> A;
+    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: consider using `Option::expect` to unwrap the `_entities::user::Model` value, panicking if the value is an `Option::None`
+    |
+137 |     user.expect("REASON").into_active_model()
+    |         +++++++++++++++++
+
+error[E0599]: no function or associated item named `find_by_email` found for struct `_entities::user::Model` in the current scope
+   --> src/controllers/auth.rs:147:35
+    |
+147 | ...= match user::Model::find_by_email(&ctx.db, &params.email).await {
+    |                         ^^^^^^^^^^^^^ function or associated item not found in `_entities::user::Model`
+    |
+   ::: src/models/_entities/user.rs:7:1
+    |
+  7 | pub struct Model {
+    | ---------------- function or associated item `find_by_email` not found for this struct
+    |
+help: there is an associated function `find_by_pid` with a similar name
+    |
+147 -     let user = match user::Model::find_by_email(&ctx.db, &params.email).await {
+147 +     let user = match user::Model::find_by_pid(&ctx.db, &params.email).await {
+    |
+
+error[E0308]: mismatched types
+   --> src/controllers/auth.rs:180:39
+    |
+180 |     format::json(CurrentResponse::new(&user))
+    |                  -------------------- ^^^^^ expected `&Model`, found `&Option<Model>`
+    |                  |
+    |                  arguments to this function are incorrect
+    |
+    = note: expected reference `&_entities::user::Model`
+               found reference `&std::option::Option<_entities::user::Model>`
+note: associated function defined here
+   --> src/views/auth.rs:36:12
+    |
+ 36 |     pub fn new(user: &user::Model) -> Self {
+    |            ^^^ ------------------
+
+error[E0599]: no function or associated item named `find_by_email` found for struct `_entities::user::Model` in the current scope
+   --> src/controllers/auth.rs:210:33
+    |
+210 | ...user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+    |                         ^^^^^^^^^^^^^ function or associated item not found in `_entities::user::Model`
+    |
+   ::: src/models/_entities/user.rs:7:1
+    |
+  7 | pub struct Model {
+    | ---------------- function or associated item `find_by_email` not found for this struct
+    |
+help: there is an associated function `find_by_pid` with a similar name
+    |
+210 -     let Ok(user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+210 +     let Ok(user) = user::Model::find_by_pid(&ctx.db, &params.email).await else {
+    |
+
+error[E0599]: no method named `clear_magic_link` found for struct `_entities::user::ActiveModel` in the current scope
+   --> src/controllers/auth.rs:238:49
+    |
+238 | ...ve_model = user.into_active_model().clear_magic_link(&ctx.db).await?;
+    |               ----                     ^^^^^^^^^^^^^^^^ method not found in `_entities::user::ActiveModel`
+    |               |
+    |               method `clear_magic_link` is available on `_entities::user::Model`
+    |
+   ::: src/models/_entities/user.rs:5:35
+    |
+  5 | ...e, Debug, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+    |                         ----------------- method `clear_magic_link` not found for this struct
+
+error[E0599]: no function or associated item named `find_by_email` found for struct `_entities::user::Model` in the current scope
+   --> src/controllers/auth.rs:254:33
+    |
+254 | ...user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+    |                         ^^^^^^^^^^^^^ function or associated item not found in `_entities::user::Model`
+    |
+   ::: src/models/_entities/user.rs:7:1
+    |
+  7 | pub struct Model {
+    | ---------------- function or associated item `find_by_email` not found for this struct
+    |
+help: there is an associated function `find_by_pid` with a similar name
+    |
+254 -     let Ok(user) = user::Model::find_by_email(&ctx.db, &params.email).await else {
+254 +     let Ok(user) = user::Model::find_by_pid(&ctx.db, &params.email).await else {
+    |
+
+error[E0282]: type annotations needed
+  --> src/mailers/auth.rs:53:37
+   |
+53 | ...ser.name.as_ref().unwrap_or(&"User".to_string()),
+   |             ^^^^^^   --------- type must be known at this point
+   |
+help: try using a fully qualified path to specify the expected types
+   |
+53 -                   "name": user.name.as_ref().unwrap_or(&"User".to_string()),
+53 +                   "name": <std::string::String as AsRef<T>>::as_ref(&user.name).unwrap_or(&"User".to_string()),
+   |
+
+error[E0282]: type annotations needed
+  --> src/mailers/auth.rs:77:37
+   |
+77 | ...ser.name.as_ref().unwrap_or(&"User".to_string()),
+   |             ^^^^^^   --------- type must be known at this point
+   |
+help: try using a fully qualified path to specify the expected types
+   |
+77 -                   "name": user.name.as_ref().unwrap_or(&"User".to_string()),
+77 +                   "name": <std::string::String as AsRef<T>>::as_ref(&user.name).unwrap_or(&"User".to_string()),
+   |
+
+error[E0277]: the trait bound `ActiveModel: ActiveModelBehavior` is not satisfied
+   --> src/models/_entities/user.rs:60:14
+    |
+ 60 |         user.insert(db).await
+    |              ^^^^^^ unsatisfied trait bound
+    |
+    = help: the trait `sea_orm::ActiveModelBehavior` is not implemented for `_entities::user::ActiveModel`
+    = help: the following other types implement trait `sea_orm::ActiveModelBehavior`:
+              _entities::post::ActiveModel
+              models::post::ActiveModel
+              sea_orm_migration::seaql_migrations::ActiveModel
+note: required by a bound in `sea_orm::ActiveModelTrait::insert`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/active_model.rs:277:15
+    |
+274 |     async fn insert<'a, C>(self, db: &'a C) -> Result<<Self::Entity as ...
+    |              ------ required by a bound in this associated function
+...
+277 |         Self: ActiveModelBehavior + 'a,
+    |               ^^^^^^^^^^^^^^^^^^^ required by this bound in `ActiveModelTrait::insert`
+    = note: the full name for the type has been written to '/home/hiroppy123/blogapp05/target/debug/deps/blogapp05-cb275cdbe675504c.long-type-17812125867663067397.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0277]: the trait bound `ActiveModel: ActiveModelBehavior` is not satisfied
+   --> src/models/_entities/user.rs:67:22
+    |
+ 67 |         active_model.update(db).await
+    |                      ^^^^^^ unsatisfied trait bound
+    |
+    = help: the trait `sea_orm::ActiveModelBehavior` is not implemented for `_entities::user::ActiveModel`
+    = help: the following other types implement trait `sea_orm::ActiveModelBehavior`:
+              _entities::post::ActiveModel
+              models::post::ActiveModel
+              sea_orm_migration::seaql_migrations::ActiveModel
+note: required by a bound in `sea_orm::ActiveModelTrait::update`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/active_model.rs:399:15
+    |
+396 |     async fn update<'a, C>(self, db: &'a C) -> Result<<Self::Entity as ...
+    |              ------ required by a bound in this associated function
+...
+399 |         Self: ActiveModelBehavior + 'a,
+    |               ^^^^^^^^^^^^^^^^^^^ required by this bound in `ActiveModelTrait::update`
+    = note: the full name for the type has been written to '/home/hiroppy123/blogapp05/target/debug/deps/blogapp05-cb275cdbe675504c.long-type-17812125867663067397.txt'
+    = note: consider using `--verbose` to print the full type name to the console
+
+error[E0599]: no variant or associated item named `MagicToken` found for enum `_entities::user::Column` in the current scope
+  --> src/models/_entities/user.rs:83:39
+   |
+ 5 | ...e, Debug, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+   |                         ----------------- variant or associated item `MagicToken` not found for this enum
+...
+83 | ...y::find().filter(Column::MagicToken.eq(token)).one(db).await
+   |                             ^^^^^^^^^^ variant or associated item not found in `_entities::user::Column`
+
+error[E0308]: mismatched types
+  --> src/models/_entities/user.rs:99:35
+   |
+99 |         self.verification_token = Set(Some(Uuid::new_v4().to_string()));
+   |         -----------------------   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<String>`, found `ActiveValue<Option<String>>`
+   |         |
+   |         expected due to the type of this binding
+   |
+   = note: expected enum `std::option::Option<_>`
+              found enum `sea_orm::ActiveValue<std::option::Option<_>>`
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:100:14
+    |
+100 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0308]: mismatched types
+   --> src/models/_entities/user.rs:104:28
+    |
+104 |         self.reset_token = Set(Some(Uuid::new_v4().to_string()));
+    |         ----------------   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Option<String>`, found `ActiveValue<Option<String>>`
+    |         |
+    |         expected due to the type of this binding
+    |
+    = note: expected enum `std::option::Option<_>`
+               found enum `sea_orm::ActiveValue<std::option::Option<_>>`
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:105:14
+    |
+105 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0308]: mismatched types
+   --> src/models/_entities/user.rs:111:28
+    |
+111 |         self.reset_token = Set(None);
+    |         ----------------   ^^^^^^^^^ expected `Option<String>`, found `ActiveValue<Option<_>>`
+    |         |
+    |         expected due to the type of this binding
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `sea_orm::ActiveValue<std::option::Option<_>>`
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:112:14
+    |
+112 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0609]: no field `magic_token` on type `&mut _entities::user::Model`
+   --> src/models/_entities/user.rs:116:14
+    |
+116 |         self.magic_token = Set(Some(Uuid::new_v4().to_string()));
+    |              ^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `id`, `email`, `password`, `verification_token`, `reset_token` ... and 11 others
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:117:14
+    |
+117 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0609]: no field `magic_token` on type `&mut _entities::user::Model`
+   --> src/models/_entities/user.rs:121:14
+    |
+121 |         self.magic_token = Set(None);
+    |              ^^^^^^^^^^^ unknown field
+    |
+    = note: available fields are: `id`, `email`, `password`, `verification_token`, `reset_token` ... and 11 others
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:123:14
+    |
+123 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0308]: mismatched types
+   --> src/models/_entities/user.rs:128:35
+    |
+128 |         self.verification_token = Set(None);
+    |         -----------------------   ^^^^^^^^^ expected `Option<String>`, found `ActiveValue<Option<_>>`
+    |         |
+    |         expected due to the type of this binding
+    |
+    = note: expected enum `std::option::Option<std::string::String>`
+               found enum `sea_orm::ActiveValue<std::option::Option<_>>`
+
+error[E0599]: no method named `update` found for mutable reference `&mut _entities::user::Model` in the current scope
+   --> src/models/_entities/user.rs:129:14
+    |
+129 |         self.update(db).await
+    |         -----^^^^^^----
+    |         |    |
+    |         |    this is an associated function, not a method
+    |         help: use associated function syntax instead: `_entities::user::Model::update(db)`
+    |
+    = note: found the following associated functions; to be used as methods, functions must have a `self` parameter
+note: the candidate is defined in the trait `sea_orm::EntityTrait`
+   --> /home/hiroppy123/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/sea-orm-1.1.17/src/entity/base_entity.rs:739:5
+    |
+739 | /     fn update<A>(model: A) -> UpdateOne<A>
+740 | |     where
+741 | |         A: ActiveModelTrait<Entity = Self>,
+    | |___________________________________________^
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `update`, perhaps you need to implement one of them:
+            candidate #1: `combine::stream::position::Positioner`
+            candidate #2: `digest::Update`
+            candidate #3: `digest::digest::Digest`
+            candidate #4: `digest::digest::DynDigest`
+            candidate #5: `digest::mac::Mac`
+            candidate #6: `hkdf::sealed::Sealed`
+            candidate #7: `rustls::crypto::hash::Context`
+            candidate #8: `sea_orm::ActiveModelTrait`
+
+error[E0592]: duplicate definitions with name `set_email_verification_sent`
+  --> src/models/_entities/user.rs:98:5
+   |
+64 |     pub async fn set_email_verification_sent(&mut self, db: &DbConn) -> Result<Self, DbErr> {
+   |     --------------------------------------------------------------------------------------- other definition for `set_email_verification_sent`
+...
+98 |     pub async fn set_email_verification_sent(&mut self, db: &DbConn) -> Result<Self, DbErr> {
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ duplicate definitions for `set_email_verification_sent`
+
+error[E0277]: the trait bound `ActiveModel: ActiveModelBehavior` is not satisfied
+ --> src/models/_entities/user.rs:5:35
+  |
+5 | ...g, PartialEq, DeriveEntityModel, Eq, Serialize, Deserialize)]
+  |                  ^^^^^^^^^^^^^^^^^ unsatisfied trait bound
+  |
+  = help: the trait `sea_orm::ActiveModelBehavior` is not implemented for `_entities::user::ActiveModel`
+  = help: the following other types implement trait `sea_orm::ActiveModelBehavior`:
+            _entities::post::ActiveModel
+            models::post::ActiveModel
+            sea_orm_migration::seaql_migrations::ActiveModel
+  = note: the full name for the type has been written to '/home/hiroppy123/blogapp05/target/debug/deps/blogapp05-cb275cdbe675504c.long-type-17812125867663067397.txt'
+  = note: consider using `--verbose` to print the full type name to the console
+  = note: this error originates in the derive macro `DeriveEntityModel` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+Some errors have detailed explanations: E0277, E0282, E0308, E0412, E0425, E0433, E0592, E0599, E0609.
+For more information about an error, try `rustc --explain E0277`.
+warning: `blogapp05` (lib) generated 5 warnings
+error: could not compile `blogapp05` (lib) due to 93 previous errors; 5 warnings emitted
+warning: build failed, waiting for other jobs to finish...
+hiroppy123@fedora:~/blogapp05$ 
+
+
